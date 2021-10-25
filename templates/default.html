@@ -49,12 +49,12 @@
                 <div class="gh-social">
                     {% if config.extra.social.facebook %}
                         <a class="gh-social-facebook" href="{{ config.extra.social.facebook | safe }}" title="Facebook" target="_blank" rel="noopener">
-                            <img src="{{ get_url(path="/facebook.svg") }}">
+                            {% include "icons/facebook.html" %}
                         </a>
                     {% endif %}
                     {% if config.extra.social.twitter %}
                         <a class="gh-social-twitter" href="{{ config.extra.social.twitter | safe }}" title="Twitter" target="_blank" rel="noopener">
-                            <img src="{{ get_url(path="/twitter.svg") }}">
+                            {% include "icons/twitter.html" %}
                         </a>
                     {% endif %}
                 </div>
