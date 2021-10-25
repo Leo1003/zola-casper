@@ -1,0 +1,24 @@
+{% macro navigation(navlist, type="") %}
+
+{% set first = true %}
+<ul class="nav">
+    {% for item in navlist %}
+    <li class="nav-{{ item.name | slugify }}">
+        {% if item.url is matching("^([^:/?#]+)://") %}
+            {# The url is considered as external link #}
+            {% set url = item.url | safe %}
+        {% else %}
+            {% set url = get_url(path=item.url) %}
+        {% endif %}
+        
+        {% if type == "secondary" and first == false %}
+            ::before
+        {% endif %}
+        <a href="{{ url }}">{{ item.name }}</a>
+    </li>
+
+    {% set first = false %}
+    {% endfor %}
+</ul>
+
+{% endmacro navigation %}

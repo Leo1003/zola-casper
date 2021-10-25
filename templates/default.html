@@ -1,3 +1,4 @@
+{% import "macros/navigation.html" as nav %}
 <!DOCTYPE html>
 <html lang="{{ lang }}">
 <head>
@@ -40,16 +41,18 @@
                 </a>
             </div>
             <div class="gh-head-menu">
-                {{navigation}}
+                {% if config.extra.navigation %}
+                {{ nav::navigation(navlist=config.extra.navigation) }}
+                {% endif %}
             </div>
             <div class="gh-head-actions">
                 <div class="gh-social">
-                    {%if config.extra.social.facebook %}
+                    {% if config.extra.social.facebook %}
                         <a class="gh-social-facebook" href="{{ config.extra.social.facebook | safe }}" title="Facebook" target="_blank" rel="noopener">
                             <img src="{{ get_url(path="/facebook.svg") }}">
                         </a>
                     {% endif %}
-                    {%if config.extra.social.twitter %}
+                    {% if config.extra.social.twitter %}
                         <a class="gh-social-twitter" href="{{ config.extra.social.twitter | safe }}" title="Twitter" target="_blank" rel="noopener">
                             <img src="{{ get_url(path="/twitter.svg") }}">
                         </a>
@@ -70,7 +73,9 @@
         <div class="inner">
             <section class="copyright"><a href="{{ config.base_url }}">{{ config.title }}</a> &copy; {{ now() | date(format="%Y") }}</section>
             <nav class="site-footer-nav">
-                {{navigation type="secondary"}}
+                {% if config.extra.navigation_secondary %}
+                {{ nav::navigation(navlist=config.extra.navigation_secondary, type="secondary") }}
+                {% endif %}
             </nav>
             <div><a href="https://www.getzola.org/" target="_blank" rel="noopener">Powered by Zola</a></div>
         </div>
@@ -86,7 +91,10 @@
     integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
     crossorigin="anonymous">
 </script>
-<script src="{{asset "built/casper.js"}}"></script>
+<!--
+<script src="{#{asset "built/casper.js"}#}"></script>
+-->
+<!--
 <script>
 $(document).ready(function () {
     // Mobile Menu Trigger
@@ -97,8 +105,9 @@ $(document).ready(function () {
     $(".gh-content").fitVids();
 });
 </script>
+-->
 
-{# Ghost outputs required functional scripts with this tag - it should always be the last thing before the closing body tag }}
+{# Ghost outputs required functional scripts with this tag - it should always be the last thing before the closing body tag #}
 {% block extra_script %}
 {% endblock extra_script %}
 
