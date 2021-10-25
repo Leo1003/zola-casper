@@ -17,3 +17,8 @@ highlight_code = true
 
 [extra]
 # Put all your custom variables here
+cover_image = "publication-cover.jpg"
+
+[extra.social]
+facebook = "https://www.facebook.com"
+twitter = "https://www.twitter.com"

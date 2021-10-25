@@ -21,7 +21,7 @@
     {% endblock extra_head %}
 
 </head>
-<body>
+<body class="{% block body_class %}{% endblock body_class %}">
 <div class="viewport">
     <header id="gh-head" class="gh-head {% if config.extra.cover_image %}has-cover{% endif %}">
         <nav class="gh-head-inner inner gh-container">

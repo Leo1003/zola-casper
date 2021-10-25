@@ -1,0 +1,21 @@
+/*
+ * Variables
+ *
+ * This file contains the default Ghost Casper's theme color.
+ * To adjust the colors, override this file with a patch or any other method.
+ * Currently, Zola doesn't support extending theme's sass file.
+ * For more details, please refer to the issues:
+ * https://github.com/getzola/zola/issues/837
+ *
+ */
+
+$color-green: #a4d037 !default;
+$color-yellow: #fecd35 !default;
+$color-red: #f05230 !default;
+$color-darkgrey: #15171a !default;
+$color-midgrey: #738a94 !default;
+$color-lightgrey: #c5d2d9 !default;
+$color-wash: #e5eff5 !default;
+$color-darkmode: #151719 !default;
+
+
