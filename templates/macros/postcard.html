@@ -1,0 +1,97 @@
+{% macro postcard(post, index, type="") %}
+{# This is a macro used to generate a post "card"
+which templates loop over to generate a list of posts. #}
+
+<article class="post-card {#{post_class}#} {% if type == "home" and post.extra.cover_image and index == 0 %}post-card-large{% endif %}">
+
+    {% if post.extra.cover_image %}
+    <a class="post-card-image-link" href="{{ post.permalink }}">
+        {# This is a responsive image, it loads different sizes depending on device
+        https://medium.freecodecamp.org/a-guide-to-responsive-images-with-ready-to-use-templates-c400bd65c433 #}
+        {% set cover_300w = resize_image(path=post.extra.cover_image, width=300, op="fit_width") %}
+        {% set cover_600w = resize_image(path=post.extra.cover_image, width=600, op="fit_width") %}
+        {% set cover_1000w = resize_image(path=post.extra.cover_image, width=1000, op="fit_width") %}
+        {% set cover_2000w = resize_image(path=post.extra.cover_image, width=2000, op="fit_width") %}
+        <img class="post-card-image"
+            srcset="{{ cover_300w.url }} 300w,
+                    {{ cover_600w.url }} 600w,
+                    {{ cover_1000w.url }} 1000w,
+                    {{ cover_2000w.url }} 2000w"
+            sizes="(max-width: 1000px) 400px, 800px"
+            src="{{ cover_600w.url }}"
+            alt="{{ post.extra.cover_image_alt | default(value=post.title) }}"
+            loading="lazy"
+        />
+    </a>
+    {% endif %}
+
+    <div class="post-card-content">
+        <a class="post-card-content-link" href="{{ post.permalink }}">
+            <header class="post-card-header">
+                {% if page.taxonomies.categories %}
+                    <div class="post-card-primary-tag">{{ page.taxonomies.categories | first }}</div>
+                {% endif %}
+                <h2 class="post-card-title">{{ post.title }}</h2>
+            </header>
+            <div class="post-card-excerpt">
+                {% if post.description %}
+                <p>{{ post.description }}</p>
+                {% elif post.summary %}
+                <p>{{ post.summary }}</p>
+                {% else %}
+                <p></p>
+                {% endif %}
+            </div>
+        </a>
+
+        <footer class="post-card-meta">
+            {% set authors = post.extra.authors | default(value=config.extra.default_authors) %}
+            <ul class="author-list">
+                {% for author_name in authors %}
+                {% set author = get_page(path="author/" ~ author_name ~ ".md") %}
+                <li class="author-list-item">
+                    {% if author.extra.profile_image %}
+                    <a href="{{ author.permalink }}" class="static-avatar">
+                        {% set profile_image = resize_image(path=author.extra.profile_image, width="100", op="fit_width") %}
+                        <img class="author-profile-image" src="{{ profile_image.url }}" alt="{{ author.title }}" />
+                    </a>
+                    {% else %}
+                    <a href="{{ author.permalink }}" class="static-avatar author-profile-image">
+                        {% include "icons/avatar.html" %}
+                    </a>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+            <div class="post-card-byline-content">
+                <span>
+                    {% if authors | length > 2 %}
+                    Multiple authors
+                    {% else %}
+                        {% set is_first = true %}
+                        {% for author_name in authors %}
+                        {% set author = get_page(path="author/" ~ author_name ~ ".md") %}
+                        {% if is_first == false %}
+                        ,
+                        {% endif %}
+                        <a href="{{ author.permalink }}">{{ author.title }}</a>
+                        {% set is_first = false %}
+                        {% endfor %}
+                    {% endif %}
+                </span>
+                <span class="post-card-byline-date">
+                    {% if post.date %}
+                    {% set date_format = config.extra.date_format | default(value="%B %e, %Y") %}
+                    <time datetime="{{ post.date | date(format="%Y-%m-%d") }}">{{ post.date | date(format=date_format) }}</time>
+                    <span class="bull">&bull;</span>
+                    {% endif %}
+                    {{ post.reading_time }} min{{ post.reading_time | pluralize }} read
+                </span>
+            </div>
+        </footer>
+
+    </div>{#/.post-card-content#}
+
+</article>
+{% endmacro %}
+

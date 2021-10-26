@@ -10,6 +10,11 @@ compile_sass = true
 # Whether to build a search index to be used later on by a JavaScript library
 build_search_index = false
 
+taxonomies = [
+    { name = "categories" },
+    { name = "tags" },
+]
+
 [markdown]
 # Whether to do syntax highlighting
 # Theme can be customised by setting the `highlight_theme` variable to a theme supported by Zola
@@ -18,6 +23,8 @@ highlight_code = true
 [extra]
 # Put all your custom variables here
 cover_image = "publication-cover.jpg"
+
+default_authors = ["foobar"]
 
 [extra.social]
 facebook = "https://www.facebook.com"
