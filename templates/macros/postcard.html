@@ -28,7 +28,7 @@ which templates loop over to generate a list of posts. #}
     <div class="post-card-content">
         <a class="post-card-content-link" href="{{ post.permalink }}">
             <header class="post-card-header">
-                {% if page.taxonomies.categories %}
+                {% if post.taxonomies.categories %}
                     <div class="post-card-primary-tag">{{ page.taxonomies.categories | first }}</div>
                 {% endif %}
                 <h2 class="post-card-title">{{ post.title }}</h2>

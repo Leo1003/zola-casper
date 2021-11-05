@@ -26,6 +26,16 @@ cover_image = "publication-cover.jpg"
 
 default_authors = ["foobar"]
 
+navigation = [
+    { name = "Home", url = "/" },
+]
+
+navigation_secondary = [
+    { name = "Home", url = "/" },
+    { name = "Facebook", url = "https://www.facebook.com" },
+    { name = "Twitter", url = "https://www.twitter.com" },
+]
+
 [extra.social]
 facebook = "https://www.facebook.com"
 twitter = "https://www.twitter.com"
