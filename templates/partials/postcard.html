@@ -1,3 +1,4 @@
+{% import "macros/responsive_img.html" as respimg %}
 {% macro postcard(post, index, type="") %}
 {# This is a macro used to generate a post "card"
 which templates loop over to generate a list of posts. #}
@@ -6,22 +7,13 @@ which templates loop over to generate a list of posts. #}
 
     {% if post.extra.cover_image %}
     <a class="post-card-image-link" href="{{ post.permalink }}">
-        {# This is a responsive image, it loads different sizes depending on device
-        https://medium.freecodecamp.org/a-guide-to-responsive-images-with-ready-to-use-templates-c400bd65c433 #}
-        {% set cover_300w = resize_image(path=post.extra.cover_image, width=300, op="fit_width") %}
-        {% set cover_600w = resize_image(path=post.extra.cover_image, width=600, op="fit_width") %}
-        {% set cover_1000w = resize_image(path=post.extra.cover_image, width=1000, op="fit_width") %}
-        {% set cover_2000w = resize_image(path=post.extra.cover_image, width=2000, op="fit_width") %}
-        <img class="post-card-image"
-            srcset="{{ cover_300w.url }} 300w,
-                    {{ cover_600w.url }} 600w,
-                    {{ cover_1000w.url }} 1000w,
-                    {{ cover_2000w.url }} 2000w"
-            sizes="(max-width: 1000px) 400px, 800px"
-            src="{{ cover_600w.url }}"
-            alt="{{ post.extra.cover_image_alt | default(value=post.title) }}"
-            loading="lazy"
-        />
+        {{ respimg::responsive_img(
+            img_path=post.extra.cover_image,
+            sizes="(max-width: 1000px) 400px, 800px",
+            class="post-card-image",
+            lazy=true,
+            alt=post.extra.cover_image_alt | default(value=post.title),
+            lazy=true) }}
     </a>
     {% endif %}
 

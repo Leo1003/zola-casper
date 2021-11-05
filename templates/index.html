@@ -1,26 +1,13 @@
 {% extends "base.html" %}
 {% import "partials/postcard.html" as pc %}
+{% import "macros/responsive_img.html" as respimg %}
 
 {% block body_class %}home-template{% endblock body_class %}
 
 {% block body %}
 <div class="site-header-content">
     {% if config.extra.cover_image %}
-        {# This is a responsive image, it loads different sizes depending on device
-        https://medium.freecodecamp.org/a-guide-to-responsive-images-with-ready-to-use-templates-c400bd65c433 #}
-        {% set cover_300w = resize_image(path=config.extra.cover_image, width=300, op="fit_width") %}
-        {% set cover_600w = resize_image(path=config.extra.cover_image, width=600, op="fit_width") %}
-        {% set cover_1000w = resize_image(path=config.extra.cover_image, width=1000, op="fit_width") %}
-        {% set cover_2000w = resize_image(path=config.extra.cover_image, width=2000, op="fit_width") %}
-        <img class="site-header-cover"
-            srcset="{{ cover_300w.url }} 300w,
-                    {{ cover_600w.url }} 600w,
-                    {{ cover_1000w.url }} 1000w,
-                    {{ cover_2000w.url }} 2000w"
-            sizes="100vw"
-            src="{{ cover_2000w.url }}"
-            alt=""
-        />
+        {{ respimg::responsive_img(img_path=config.extra.cover_image, sizes="100vw", class="site-header-cover") }}
     {% endif %}
     <h1 class="site-title">
         {% if config.extra.logo %}
