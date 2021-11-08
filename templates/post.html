@@ -91,21 +91,6 @@
             {% if page.slug == post.slug %}
                 {% continue %}
             {% endif %}
-            {# Match related authors #}
-            {% set_global author_matched = false %}
-            {% set authors = page.extra.authors | default(value=config.extra.default_authors) %}
-            {% set post_authors = post.extra.authors | default(value=config.extra.default_authors) %}
-
-            {% for author in authors %}
-                {% if author in post_authors %}
-                    {% set_global author_matched = true %}
-                    {% break %}
-                {% endif %}
-            {% endfor %}
-
-            {% if author_matched != true %}
-                {% continue %}
-            {% endif %}
 
             {% set_global read_more_posts = [post] | concat(with=read_more_posts) %}
 
