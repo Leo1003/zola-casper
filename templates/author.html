@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% import "partials/postcard.html" as postcard %}
+
+{% block title %}{{ page.title }}{% endblock title %}
+
+{% block body_class %}author-template author-{{ page.slug }}{% endblock body_class %}
+
+{% block body %}
+
+{% set posts_section = get_section(path="posts/_index.md") %}
+{% set_global author_posts = [] %}
+{% for post in posts_section.pages %}
+    {% set authors = post.extra.authors | default(value=config.extra.default_authors) %}
+    {% if authors is containing(page.slug) %}
+        {% set_global author_posts = [post] | concat(with=author_posts) %}
+    {% endif %}
+{% endfor %}
+
+<section class="outer">
+    <div class="inner posts">
+        <header class="author-profile">
+            <div class="author-profile-content">
+
+                {% if author.extra.profile_image %}
+                {% set profile_image = resize_image(path=author.extra.profile_image, width="100", op="fit_width") %}
+                <img class="author-profile-pic" src="{{ profile_image }}" alt="{{ page.title }}" />
+                {% else %}
+                <span class="author-profile-pic">{% include "icons/avatar.html" %}</span>
+                {% endif %}
+
+                <h1>{{ page.title }}</h1>
+                <p>
+                    {% if page.description %}
+                        {{ page.description }}
+                    {% else %}
+                        {% if author_posts | length > 0 %}
+                        {{ author_posts | length }} post{{ author_posts | length | pluralize }} published
+                        {% else %}
+                        No posts published
+                        {% endif %}
+                    {% endif %}
+                </p>
+
+                <div class="author-profile-meta">
+                    {% if page.extra.profile.location %}
+                    <div class="author-profile-location">📍 {{ page.extra.profile.location }}</div>
+                    {% endif %}
+                    {% if page.extra.profile.website %}
+                    <span><a class="author-profile-social-link" href="{{ page.extra.profile.website }}" target="_blank" rel="noopener">{{ page.extra.profile.website }}</a></span>
+                    {% endif %}
+                    {% if page.extra.profile.twitter %}
+                    <span><a class="author-profile-social-link" href="{{ page.extra.profile.twitter }}" target="_blank" rel="noopener">{{ page.extra.profile.twitter_url }}</a></span>
+                    {% endif %}
+                    {% if page.extra.profile.facebook %}
+                    <span><a class="author-profile-social-link" href="{{ page.extra.profile.facebook }}" target="_blank" rel="noopener">{{ page.extra.profile.facebook_url }}</a></span>
+                    {% endif %}
+                </div>
+            </div>
+        </header>
+
+        <div class="post-feed">
+            {% for post in author_posts %}
+                {{ postcard::postcard(post=post) }}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock body %}
+
