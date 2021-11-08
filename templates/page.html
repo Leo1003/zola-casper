@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page.title }}{% endblock title %}
+
+{% block body %}
+<main id="site-main" class="site-main">
+    <article class="article {#{post_class}#}">
+
+        <header class="article-header gh-canvas">
+            {% if page.extra.cover_image %}
+            <figure class="article-image">
+                {% set alt = page.extra.cover_image_alt | default(value=page.title) %}
+                {{ resp_img::responsive_img(img_path=page.extra.cover_image, sizes="(min-width: 1400px) 1400px, 92vw", alt=alt) }}
+
+                {% if page.extra.cover_image_caption %}
+                    <figcaption>{{ page.extra.cover_image_caption }}</figcaption>
+                {% endif %}
+            </figure>
+            {% endif %}
+        </header>
+
+        <section class="gh-content gh-canvas">
+
+            <h1 class="article-title">{{ page.title }}</h1>
+
+            {{ page.content | safe }}
+
+        </section>
+
+    </article>
+</main>
+{% endblock body %}
