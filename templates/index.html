@@ -27,10 +27,8 @@
         <div class="post-feed">
             {% set posts = get_section(path="posts/_index.md") %}
             {% set postcard_cnt = config.extra.index_posts_count | default(value=12) %}
-            {% set i = 0 %}
             {% for p in posts.pages | slice(end=postcard_cnt) %}
-                {{ pc::postcard(post=p, index=i, type="home") }}
-                {% set i = i + 1 %}
+                {{ pc::postcard(post=p, index=loop.index0, type="home") }}
             {% endfor %}
         </div>
 
