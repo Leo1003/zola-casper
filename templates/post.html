@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% import "macros/responsive_img.html" as resp_img %}
+{% import "partials/postcard.html" as postcard %}
+
+{% block body %}
+
+<main id="site-main" class="site-main">
+    <article class="article {#{post_class}#}">
+        <header class="article-header gh-canvas">
+
+            {% if post.taxonomies.categories %}
+            <section class="article-tag">
+                {% set url = get_taxonomy_url(kind="categories", name=page.taxonomies.categories | first, lang=page.lang) %}
+                <a href="{{ url }}">{{ page.taxonomies.categories | first }}</a>
+            </section>
+            {% endif %}
+
+            <h1 class="article-title">{{ page.title }}</h1>
+
+            {% if page.description %}
+            <p class="article-excerpt">{{ page.description }}</p>
+            {% endif %}
+
+            <div class="article-byline">
+                <section class="article-byline-content">
+                    <ul class="author-list">
+                        {% set authors = post.extra.authors | default(value=config.extra.default_authors) %}
+                        {% for author_name in authors %}
+                        <li class="author-list-item">
+                            {% set author = get_page(path="author/" ~ author_name ~ ".md") %}
+                            {% if author.extra.profile_image %}
+                            <a href="{{ author.permalink }}" class="author-avatar">
+                                {% set profile_image = resize_image(path=author.extra.profile_image, width="100", op="fit_width") %}
+                                <img class="author-profile-image" src="{{ profile_image.url }}" alt="{{ author.title }}" />
+                            </a>
+                            {% else %}
+                            <a href="{{ author.permalink }}" class="author-avatar author-profile-image">
+                                {% include "icons/avatar.html" %}
+                            </a>
+                            {% endif %}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="article-byline-meta">
+                        <h4 class="author-name">{{ authors | join(sep=", ") }}</h4>
+                        <div class="byline-meta-content">
+                            {% if post.date %}
+                            {% set date_format = config.extra.date_format | default(value="%B %e, %Y") %}
+                            <time class="byline-meta-date" datetime="{{ post.date | date(format="%Y-%m-%d") }}">{{ post.date | date(format=date_format) }}</time>
+                            <span class="bull">&bull;</span>
+                            {% endif %}
+                            <span class="byline-reading-time"> {{ page.reading_time }} min{{ page.reading_time | pluralize }} read</span>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            {% if page.extra.cover_image %}
+            <figure class="article-image">
+                {% set alt = page.extra.cover_image_alt | default(value=page.title) %}
+                {{ resp_img::responsive_img(img_path=page.extra.cover_image, sizes="(min-width: 1400px) 1400px, 92vw", alt=alt) }}
+
+                {% if page.extra.cover_image_caption %}
+                    <figcaption>{{ page.extra.cover_image_caption }}</figcaption>
+                {% endif %}
+            </figure>
+            {% endif %}
+        </header>
+
+        <section class="gh-content gh-canvas">
+            {{ page.content | safe }}
+        </section>
+    </article>
+</main>
+
+{# Read more links, just above the footer #}
+<aside class="read-more-wrap">
+    <div class="read-more inner">
+
+        {# The following codes below fetches some of the latest posts here
+        so that people have something else to read when they finish this one.
+
+        This query gets the latest 3 posts on the site, but adds a filter to
+        exclude the post we're currently on from being included. #}
+
+        {% set section = get_section(path="posts/_index.md") %}
+        {% set_global read_more_posts = [] %}
+        {% for post in section.pages %}
+            {% if page.slug == post.slug %}
+                {% continue %}
+            {% endif %}
+            {# Match related authors #}
+            {% set_global author_matched = false %}
+            {% set authors = page.extra.authors | default(value=config.extra.default_authors) %}
+            {% set post_authors = post.extra.authors | default(value=config.extra.default_authors) %}
+
+            {% for author in authors %}
+                {% if author in post_authors %}
+                    {% set_global author_matched = true %}
+                    {% break %}
+                {% endif %}
+            {% endfor %}
+
+            {% if author_matched != true %}
+                {% continue %}
+            {% endif %}
+
+            {% set_global read_more_posts = [post] | concat(with=read_more_posts) %}
+
+            {% if read_more_posts | length >= 3 %}
+                {% break %}
+            {% endif %}
+        {% endfor %}
+
+        {% for post in read_more_posts %}
+        {{ postcard::postcard(post=post) }}
+        {% endfor %}
+    </div>
+</aside>
+
+{% endblock body %}
+
