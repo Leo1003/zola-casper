@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% import "macros/responsive_img.html" as resp_img %}
+{% import "partials/postcard.html" as postcard %}
+
+{% block body %}
+<section class="outer error-content">
+    <div class="inner">
+        <section class="error-message">
+            <h1 class="error-code">404</h1>
+            <p class="error-description">Page not found</p>
+            <a class="error-link" href="{{config.base_url}}">Go to the front page →</a>
+        </section>
+    </div>
+</section>
+
+{# Given that people landing on this page didn't find what they
+were looking for, let's give them some alternative stuff to read. #}
+<aside class="read-more-wrap">
+    <div class="read-more inner">
+        {% set section = get_section(path="posts/_index.md") %}
+        {% set_global read_more_posts = section.pages | slice(end=3) %}
+        {% for post in read_more_posts %}
+        {{ postcard::postcard(post=post) }}
+        {% endfor %}
+    </div>
+</aside>
+{% endblock body %}
+
