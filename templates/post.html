@@ -1,15 +1,14 @@
 {% extends "base.html" %}
-{% import "macros/responsive_img.html" as resp_img %}
-{% import "macros/class.html" as class %}
+{% import "macros/utils.html" as utils %}
 {% import "partials/postcard.html" as postcard %}
 
 {% block title %}{{ page.title }}{% endblock title %}
 
-{% block body_class %}post-template {{ class::category_class(page=page) }} {{ class::tag_class(page=page) }}{% endblock body_class %}
+{% block body_class %}post-template {{ utils::category_class(page=page) }} {{ utils::tag_class(page=page) }}{% endblock body_class %}
 
 {% block body %}
 <main id="site-main" class="site-main">
-    <article class="article post {{ class::category_class(page=page) }} {{ class::tag_class(page=page) }}">
+    <article class="article post {{ utils::category_class(page=page) }} {{ utils::tag_class(page=page) }}">
         <header class="article-header gh-canvas">
 
             {% if post.taxonomies.categories %}
@@ -62,7 +61,7 @@
             {% if page.extra.cover_image %}
             <figure class="article-image">
                 {% set alt = page.extra.cover_image_alt | default(value=page.title) %}
-                {{ resp_img::responsive_img(img_path=page.extra.cover_image, sizes="(min-width: 1400px) 1400px, 92vw", alt=alt) }}
+                {{ utils::responsive_img(img_path=page.extra.cover_image, sizes="(min-width: 1400px) 1400px, 92vw", alt=alt) }}
 
                 {% if page.extra.cover_image_caption %}
                     <figcaption>{{ page.extra.cover_image_caption }}</figcaption>

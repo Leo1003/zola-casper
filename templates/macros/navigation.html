@@ -5,7 +5,7 @@
     <li class="nav-{{ item.name | slugify }}">
         {% if item.url is matching("^([^:/?#]+)://") %}
             {# The url is considered as external link #}
-            {% set url = item.url | safe %}
+            {% set url = item.url %}
         {% else %}
             {% set url = get_url(path=item.url) %}
         {% endif %}

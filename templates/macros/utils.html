@@ -19,3 +19,18 @@
     />
 {% endmacro %}
 
+{% macro tag_class(page) %}
+{% if page.taxonomies.tags %}
+{% for tag in page.taxonomies.tags %}
+{% if loop.first == false %}{{ " " }}{% endif %}{{ "tag-" ~ tag | slugify }}
+{% endfor %}
+{% endif %}
+{% endmacro tag_class %}
+
+{% macro category_class(page) %}
+{% if page.taxonomies.categories %}
+{% for tag in page.taxonomies.categories %}
+{% if loop.first == false %}{{ " " }}{% endif %}{{ "category-" ~ tag | slugify }}
+{% endfor %}
+{% endif %}
+{% endmacro category_class %}

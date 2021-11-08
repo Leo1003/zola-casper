@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% import "partials/postcard.html" as pc %}
-{% import "macros/responsive_img.html" as respimg %}
+{% import "macros/utils.html" as utils %}
 
 {% block body_class %}home-template{% endblock body_class %}
 
 {% block body %}
 <div class="site-header-content">
     {% if config.extra.cover_image %}
-        {{ respimg::responsive_img(img_path=config.extra.cover_image, sizes="100vw", class="site-header-cover") }}
+        {{ utils::responsive_img(img_path=config.extra.cover_image, sizes="100vw", class="site-header-cover") }}
     {% endif %}
     <h1 class="site-title">
         {% if config.extra.logo %}

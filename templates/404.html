@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% import "macros/responsive_img.html" as resp_img %}
 {% import "partials/postcard.html" as postcard %}
 
 {% block body %}
@@ -8,7 +7,7 @@
         <section class="error-message">
             <h1 class="error-code">404</h1>
             <p class="error-description">Page not found</p>
-            <a class="error-link" href="{{config.base_url}}">Go to the front page →</a>
+            <a class="error-link" href="{{ config.base_url }}">Go to the front page →</a>
         </section>
     </div>
 </section>
