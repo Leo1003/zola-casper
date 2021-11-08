@@ -1,17 +1,17 @@
 {% macro responsive_img(img_path, sizes, class="", alt="", lazy=false) %}
     {# This is a responsive image, it loads different sizes depending on device
     https://medium.freecodecamp.org/a-guide-to-responsive-images-with-ready-to-use-templates-c400bd65c433 #}
-    {% set img_300w = resize_image(path=img_path, width=300, op="fit_width") %}
-    {% set img_600w = resize_image(path=img_path, width=600, op="fit_width") %}
-    {% set img_1000w = resize_image(path=img_path, width=1000, op="fit_width") %}
-    {% set img_2000w = resize_image(path=img_path, width=2000, op="fit_width") %}
+    {% set img_s = resize_image(path=img_path, width=300, op="fit_width") %}
+    {% set img_m = resize_image(path=img_path, width=600, op="fit_width") %}
+    {% set img_l = resize_image(path=img_path, width=1000, op="fit_width") %}
+    {% set img_xl = resize_image(path=img_path, width=2000, op="fit_width") %}
     <img class="{{ class }}"
-        srcset="{{ img_300w.url }} 300w,
-                {{ img_600w.url }} 600w,
-                {{ img_1000w.url }} 1000w,
-                {{ img_2000w.url }} 2000w"
+        srcset="{{ img_s.url }} 300w,
+                {{ img_m.url }} 600w,
+                {{ img_l.url }} 1000w,
+                {{ img_xl.url }} 2000w"
         sizes="{{ sizes }}"
-        src="{{ img_2000w.url }}"
+        src="{{ img_xl.url }}"
         alt="{{ alt }}"
         {% if lazy %}
         loading="lazy"
