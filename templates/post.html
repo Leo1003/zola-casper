@@ -1,13 +1,15 @@
 {% extends "base.html" %}
 {% import "macros/responsive_img.html" as resp_img %}
+{% import "macros/class.html" as class %}
 {% import "partials/postcard.html" as postcard %}
 
 {% block title %}{{ page.title }}{% endblock title %}
 
-{% block body %}
+{% block body_class %}post-template {{ class::category_class(page=page) }} {{ class::tag_class(page=page) }}{% endblock body_class %}
 
+{% block body %}
 <main id="site-main" class="site-main">
-    <article class="article {#{post_class}#}">
+    <article class="article post {{ class::category_class(page=page) }} {{ class::tag_class(page=page) }}">
         <header class="article-header gh-canvas">
 
             {% if post.taxonomies.categories %}

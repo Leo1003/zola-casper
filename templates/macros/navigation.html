@@ -1,6 +1,5 @@
 {% macro navigation(navlist, type="") %}
 
-{% set first = true %}
 <ul class="nav">
     {% for item in navlist %}
     <li class="nav-{{ item.name | slugify }}">
@@ -11,13 +10,11 @@
             {% set url = get_url(path=item.url) %}
         {% endif %}
         
-        {% if type == "secondary" and first == false %}
+        {% if type == "secondary" and loop.first == false %}
             ::before
         {% endif %}
         <a href="{{ url }}">{{ item.name }}</a>
     </li>
-
-    {% set first = false %}
     {% endfor %}
 </ul>
 

@@ -2,9 +2,11 @@
 
 {% block title %}{{ page.title }}{% endblock title %}
 
+{% block body_class %}page-template page-{{ page.slug }}{% endblock body_class %}
+
 {% block body %}
 <main id="site-main" class="site-main">
-    <article class="article {#{post_class}#}">
+    <article class="article page {{ class::category_class(page=page) }} {{ class::tag_class(page=page) }}">
 
         <header class="article-header gh-canvas">
             {% if page.extra.cover_image %}
