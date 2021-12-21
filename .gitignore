@@ -3,3 +3,7 @@
 
 # Image processing output directory
 /static/processed_images/
+
+# Editor files
+.vscode/
+*.sw?
