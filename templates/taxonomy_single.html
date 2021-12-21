@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% import "partials/postcard.html" as pc %}
+{% import "macros/utils.html" as utils %}
+
+{% block body %}
+<section class="outer">
+    <div class="inner posts">
+        <div class="post-feed">
+
+            <section class="post-card post-card-large">
+                {# FIXME: Currently, there is no way to specific extra in taxonomy config #}
+                {# The feature image is not implemented here #}
+                <div class="post-card-content">
+                    <div class="post-card-content-link">
+                        <header class="post-card-header">
+                            <div class="post-card-primary-tag">{{ taxonomy.name | capitalize }}</div>
+                            <h2 class="post-card-title">{{ term.name | capitalize }}</h2>
+                        </header>
+                        <div class="post-card-excerpt">
+                            <p>
+                                {# FIXME: Currently, there is no way to specific extra in taxonomy config #}
+                                {# The tag description is not implemented here #}
+                                {% set term_count = term.pages | length %}
+                                A collection of {{ term_count }} post{{ term_count | pluralize }}
+                            </p>
+                        </div>
+                    </div>
+                </div>{# /.post-card-content #}
+            </section>
+
+            {% for p in term.pages %}
+                {{ pc::postcard(post=p, index=loop.index0) }}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock body %}

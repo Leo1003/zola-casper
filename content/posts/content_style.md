@@ -3,6 +3,9 @@ title = "Content style illustration"
 description = "Show cases of every style rendered"
 date = "2021-11-08"
 
+[taxonomies]
+tags = ["markdown"]
+
 [extra]
 cover_image = "posts/Markdown.png"
 +++

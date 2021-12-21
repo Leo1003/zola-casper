@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% import "partials/postcard.html" as pc %}
+{% import "macros/utils.html" as utils %}
+
+{% block body %}
+<main id="site-main" class="site-main outer" role="main">
+    <article class="article page">
+        <header class="article-header gh-canvas">
+            {# FIXME: Currently, there is no way to specific extra in taxonomy config #}
+            {# The feature image is not implemented here #}
+            <h1 class="article-title">{{ taxonomy.name | capitalize }}</h1>
+        </header>
+
+        <section class="gh-content gh-canvas">
+            <ol class="tags-list gh-list">
+                <li class="gh-list-row header">
+                    <div class="gh-list-header gh-list-cellwidth-70">Tag</div>
+                    <div class="gh-list-header gh-list-cellwidth-20">
+                        No. of posts
+                    </div>
+                    <div class="gh-list-header gh-list-cellwidth-10"></div>
+                </li>
+                {% for term in terms %}
+                {% set term_count = terms | length %}
+                <li class="gh-list-row gh-tags-list-item">
+                    <a href="{{ term.permalink }}" class="gh-list-data gh-tag-list-title gh-list-cellwidth-70">
+                        <h3 class="gh-tag-list-name">{{ term.name }}</h3>
+                    </a>
+
+                    <a href="{{ term.permalink }}" class="gh-list-data gh-tag-list-posts-count gh-list-cellwidth-20">
+                        <span class="nowrap">{{ term_count }} post{{ term_count | pluralize }}</span>
+                    </a>
+
+                    <a href="{{ term.permalink }}" class="gh-list-data gh-list-cellwidth-10 gh-tag-list-chevron">
+                        <div class="flex items-center justify-end w-100 h-100">
+                            {% include "icons/right_arrow.html" %}
+                        </div>
+                    </a>
+                </li>
+                {% endfor %}
+            </ol>
+        </section>
+    </article>
+
+</main>
+
+{% endblock body %}
