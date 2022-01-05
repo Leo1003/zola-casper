@@ -9,10 +9,6 @@
         {% else %}
             {% set url = get_url(path=item.url) %}
         {% endif %}
-        
-        {% if type == "secondary" and loop.first == false %}
-            ::before
-        {% endif %}
         <a href="{{ url }}">{{ item.name }}</a>
     </li>
     {% endfor %}
