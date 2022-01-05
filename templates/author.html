@@ -22,7 +22,7 @@
             <div class="author-profile-content">
 
                 {% if author.extra.profile_image %}
-                {% set profile_image = resize_image(path=author.extra.profile_image, width="100", op="fit_width") %}
+                {% set profile_image = resize_image(path=author.extra.profile_image, width=100, op="fit_width") %}
                 <img class="author-profile-pic" src="{{ profile_image }}" alt="{{ page.title }}" />
                 {% else %}
                 <span class="author-profile-pic">{% include "icons/avatar.html" %}</span>

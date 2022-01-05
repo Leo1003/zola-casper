@@ -44,7 +44,7 @@
                 <li class="author-list-item">
                     {% if author.extra.profile_image %}
                     <a href="{{ author.permalink }}" class="static-avatar">
-                        {% set profile_image = resize_image(path=author.extra.profile_image, width="100", op="fit_width", lazy=true) %}
+                        {% set profile_image = resize_image(path=author.extra.profile_image, width=100, op="fit_width", lazy=true) %}
                         <img class="author-profile-image" src="{{ profile_image.url }}" alt="{{ author.title }}" />
                     </a>
                     {% else %}
