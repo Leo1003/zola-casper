@@ -1,9 +1,9 @@
 {% import "macros/utils.html" as utils %}
 {% macro postcard(post, index=0, type="") %}
-{# This is a macro used to generate a post "card"
-which templates loop over to generate a list of posts. #}
+{# This is a macro used to generate a post "card" which templates loop over to generate a list of posts. #}
+{% set_global design = config.extra.design %}
 
-<article class="post-card post {{ utils::category_class(page=post) }} {{ utils::tag_class(page=post) }} {% if type == "home" and post.extra.cover_image and index == 0 %}post-card-large{% endif %}">
+<article class="post-card post {{ utils::category_class(page=post) }} {{ utils::tag_class(page=post) }} {% if type == "home" and design.feed_layout != "Simple_Grid" and post.extra.cover_image and index == 0 %}post-card-large{% endif %}">
 
     {% if post.extra.cover_image %}
     <a class="post-card-image-link" href="{{ post.permalink }}">
@@ -44,7 +44,7 @@ which templates loop over to generate a list of posts. #}
                 <li class="author-list-item">
                     {% if author.extra.profile_image %}
                     <a href="{{ author.permalink }}" class="static-avatar">
-                        {% set profile_image = resize_image(path=author.extra.profile_image, width="100", op="fit_width") %}
+                        {% set profile_image = resize_image(path=author.extra.profile_image, width="100", op="fit_width", lazy=true) %}
                         <img class="author-profile-image" src="{{ profile_image.url }}" alt="{{ author.title }}" />
                     </a>
                     {% else %}

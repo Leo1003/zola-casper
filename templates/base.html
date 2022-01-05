@@ -1,6 +1,14 @@
 {% import "macros/navigation.html" as nav %}
+{% set_global design = config.extra.design %}
 <!DOCTYPE html>
-<html lang="{{ lang }}">
+<html lang="{{ lang }}"
+{% if design.color_scheme == "Dark" %}
+class="dark-mode"
+{% endif %}
+{% if design.color_scheme == "Auto" %}
+class="auto-color"
+{% endif %}
+>
 <head>
 
     {# Basic meta #}
@@ -9,6 +17,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+        :root {
+            {% if design.header_button_background %}
+            --button-bg-color: {{ design.header_button_background }};
+            {% endif %}
+            --button-text-color: {% if design.header_button_text_color == "Light" %}#fff{% else %}var(--color-darkgrey){% endif %};
+        }
+    </style>
 
     {# Theme assets #}
     <link rel="stylesheet" type="text/css" href="{{ get_url(path="screen.css", trailing_slash=false) }}">
@@ -22,9 +39,9 @@
     {% endblock extra_head %}
 
 </head>
-<body class="{% block body_class %}{% endblock body_class %}">
+<body class="{% block body_class %}{% endblock body_class %}{% if design.title_font == "serif" %} has-serif-title{% endif %}{% if design.body_font == "sans-serif" %} has-sans-body{% endif %}">
 <div class="viewport">
-    <header id="gh-head" class="gh-head {% if config.extra.cover_image %}has-cover{% endif %}">
+    <header id="gh-head" class="gh-head{% if design.publication_cover_style != "None" %} has-cover{% endif %}">
         <nav class="gh-head-inner inner gh-container">
 
             <div class="gh-head-brand">

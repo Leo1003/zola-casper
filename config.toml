@@ -22,8 +22,6 @@ highlight_code = true
 
 [extra]
 # Put all your custom variables here
-cover_image = "publication-cover.jpg"
-
 default_authors = ["foobar"]
 
 navigation = [
@@ -35,6 +33,34 @@ navigation_secondary = [
     { name = "Facebook", url = "https://www.facebook.com" },
     { name = "Twitter", url = "https://www.twitter.com" },
 ]
+
+[extra.design]
+# Possible value: sans-serif, serif
+title_font = "sans-serif"
+
+# Possible value: sans-serif, serif
+body_font = "serif"
+
+# Possible value: None, Medium, Large
+publication_cover_style = "Medium"
+
+publication_cover_image = "publication-cover.jpg"
+
+# Possible value: Dynamic_Grid, Simple_Grid, List
+feed_layout = "Dynamic_Grid"
+
+# Possible value: Auto, Light, Dark
+color_scheme = "Light"
+
+#header_button_background = "#ffffff"
+
+# Possible value: Light, Dark
+header_button_text_color = "Light"
+
+# Possible value: Wide, Full, Small
+post_image_width = "Wide"
+
+show_recent_posts = true
 
 [extra.social]
 facebook = "https://www.facebook.com"

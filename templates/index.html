@@ -5,9 +5,10 @@
 {% block body_class %}home-template{% endblock body_class %}
 
 {% block body %}
-<div class="site-header-content">
-    {% if config.extra.cover_image %}
-        {{ utils::responsive_img(img_path=config.extra.cover_image, sizes="100vw", class="site-header-cover") }}
+{% if design.publication_cover_style != "None" %}
+<div class="site-header-content{% if design.publication_cover_style == "Large" %} large{% endif %}">
+    {% if design.publication_cover_image %}
+        {{ utils::responsive_img(img_path=design.publication_cover_image, sizes="100vw", class="site-header-cover") }}
     {% endif %}
     <h1 class="site-title">
         {% if config.extra.logo %}
@@ -19,12 +20,13 @@
     </h1>
     <p>{{ config.description }}</p>
 </div>
+{% endif %}
 
 {# The main content area #}
 <main id="site-main" class="site-main outer">
     <div class="inner posts">
 
-        <div class="post-feed">
+        <div class="post-feed{% if design.feed_layout == "List" %} list{% endif %}">
             {% set posts = get_section(path="posts/_index.md") %}
             {% set postcard_cnt = config.extra.index_posts_count | default(value=12) %}
             {% for p in posts.pages | slice(end=postcard_cnt) %}
