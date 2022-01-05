@@ -33,7 +33,7 @@
                             {% set author = get_page(path="author/" ~ author_name ~ ".md") %}
                             {% if author.extra.profile_image %}
                             <a href="{{ author.permalink }}" class="author-avatar">
-                                {% set profile_image = resize_image(path=author.extra.profile_image, width="100", op="fit_width") %}
+                                {% set profile_image = resize_image(path=author.extra.profile_image, width=100, op="fit_width") %}
                                 <img class="author-profile-image" src="{{ profile_image.url }}" alt="{{ author.title }}" />
                             </a>
                             {% else %}
