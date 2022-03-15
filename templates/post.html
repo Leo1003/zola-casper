@@ -78,8 +78,6 @@
 
 {# Read more links, just above the footer #}
 {% if design.show_recent_posts %}
-<aside class="read-more-wrap">
-    <div class="read-more inner">
 
         {# The following codes below fetches some of the latest posts here
         so that people have something else to read when they finish this one.
@@ -101,11 +99,15 @@
             {% endif %}
         {% endfor %}
 
-        {% for post in read_more_posts %}
-        {{ postcard::postcard(post=post) }}
-        {% endfor %}
-    </div>
-</aside>
+        {% if read_more_posts | length > 0 %}
+        <aside class="read-more-wrap">
+            <div class="read-more inner">
+                {% for post in read_more_posts %}
+                {{ postcard::postcard(post=post) }}
+                {% endfor %}
+            </div>
+        </aside>
+        {% endif %}
 {% endif %}
 
 {% endblock body %}
