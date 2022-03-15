@@ -21,14 +21,14 @@
                     <div class="gh-list-header gh-list-cellwidth-10"></div>
                 </li>
                 {% for term in terms %}
-                {% set term_count = terms | length %}
+                {% set page_count = term.pages | length %}
                 <li class="gh-list-row gh-tags-list-item">
                     <a href="{{ term.permalink }}" class="gh-list-data gh-tag-list-title gh-list-cellwidth-70">
                         <h3 class="gh-tag-list-name">{{ term.name }}</h3>
                     </a>
 
                     <a href="{{ term.permalink }}" class="gh-list-data gh-tag-list-posts-count gh-list-cellwidth-20">
-                        <span class="nowrap">{{ term_count }} post{{ term_count | pluralize }}</span>
+                        <span class="nowrap">{{ page_count }} post{{ page_count | pluralize }}</span>
                     </a>
 
                     <a href="{{ term.permalink }}" class="gh-list-data gh-list-cellwidth-10 gh-tag-list-chevron">
