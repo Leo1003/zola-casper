@@ -7,7 +7,7 @@
 
 {% block body %}
 <main id="site-main" class="site-main">
-    <article class="article page {{ class::category_class(page=page) }} {{ class::tag_class(page=page) }}">
+    <article class="article page {{ utils::category_class(page=page) }} {{ utils::tag_class(page=page) }}">
 
         <header class="article-header gh-canvas">
             {% if page.extra.cover_image %}
